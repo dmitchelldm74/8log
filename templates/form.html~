@@ -4,14 +4,61 @@
     {% for post in info %}
         <input style="color:transparent;background-color:transparent; border:none;" type="text" id='c' value="{{ post }}"/>
     <h2>Edit Blog:</h2>
-    <form id="f1" action="" method="post">
-        <textarea id='b' style="margin: 0px; height: 411px; width: 530px;" type="text" name="content" value=""></textarea>
-        <input onclick="alert('Blog Successfully updated!')" type="submit" value="Save"><br/>
-    </form>
+    <form id="f1" action="" method="post"><textarea id='b' style=" position: absolute; right:0px;margin: 0px;height: 600px; width: 400px;" type="text" name="content" value=""></textarea>
+    <input class="btn btn-info" style="background-color:purple;" onclick="sync(); alert('Blog Successfully updated!');" type="submit" value="Save"><label>Open HTML Document:<input class="btn btn-info" style="background-color:purple;" type='file' accept='text/plain' onchange='openFile(event)'></label></form>
+    <button class="btn btn-info" onclick="document.execCommand('bold',false,null);"><b>B</b></button><button class="btn btn-info" onclick="document.execCommand('italic',false,null);"><i>I</i></button><button class="btn btn-info" onclick="document.execCommand('underline',false,null);"><u>U</u></button><input id="img" type="text" style="width:500px;" Placeholder="Url For Img or Link ',' splitting url with link text..."/><button class="btn btn-info" onclick="document.execCommand('insertImage',false, document.getElementById('img').value);">Add Image</button><button class="btn btn-info" onclick="link();">Add Link</button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 1);"><h7>1</h7></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 2);"><h6>2</h6></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 3);"><h5>3</h5></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 4);"><h4>4</h4></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 5);"><h3>5</h3></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 6);"><h2>6</h2></button><button class="btn btn-info" onclick="document.execCommand('fontSize', 'h', 7);"><h1>7</h1></button><button class="btn btn-info" onclick="document.execCommand('insertParagraph');">Add Paragraph</button><select id="color" class="input"  onchange="color(this);">
+      <option value="black" selected ="selected">Font Color...</option>
+      <option value="black">Black</option>
+      <option value="red">Red</option>
+      <option value="orange">Orange</option>
+      <option value="yellow">Yellow</option>
+      <option value="green">Green</option>
+      <option value="blue">Blue</option>
+      <option value="purple">Purple</option>
+      <option value="pink">Pink</option>
+      <option value="hotpink">Hot Pink</option>
+      <option value="gray">Gray</option>
+      <option value="lightgray">Light Gray</option>
+</select>
+    <div id='htm' onkeyup="sync();" style="background-color:white; margin: 0px; height: 450px; width: 1400px;" contenteditable="true"></div>
+    
+    <br/>
+        
+        
+    
     {% endfor %}
 <script>
 var w = window.location.href;
-document.getElementById('f1').action = w;  
-document.getElementById('b').value = document.getElementById('c').value;   
+document.getElementById('f1').action = w;   
+document.getElementById('b').value = document.getElementById('c').value; 
+document.getElementById('htm').innerHTML = document.getElementById('c').value;   
+function sync(){
+     document.getElementById('b').value = document.getElementById('htm').innerHTML;   
+}
+function show_html(){
+    document.getElementById('b').style.background = "white";
+    document.getElementById('b').style.color = "black";
+}
+function link(){
+    var a = document.getElementById('img').value;
+    var b = a.split(",");
+    document.getElementById('htm').innerHTML = document.getElementById('htm').innerHTML + '<a href="' + b[0] + '">' + b[1] + '</a>';
+}
+var color = function(color1){
+  console.log(color1.value)
+  var col01 = document.getElementById('color').value;    
+  document.execCommand('foreColor', 'random', col01);
+}
+var openFile = function(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        reader.onload = function(){
+          var text = reader.result;
+          var node = document.getElementById('htm');
+          node.innerHTML = text;
+          console.log(reader.result.substring(0, 200));
+        };
+        reader.readAsText(input.files[0]);
+      };
 </script>
 {% endblock %}
