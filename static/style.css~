@@ -1,0 +1,7 @@
+body {
+    background-color: #cc66ff;
+    color: lightblue;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 20px;
+}
+a{color:lightblue;}

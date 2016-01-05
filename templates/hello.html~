@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block body %}
+    <script>
+    function search1()
+    {
+        var a = document.getElementById("to").value;
+        window.location.href = '/page/' + a;
+}   function searchKeyPress(e)
+    {
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+        document.getElementById('btn').click();
+        return false;
+    }
+    return true;
+}
+    </script>
+    {% if name %}
+      <h1>Hello {{ name }}!</h1>
+    {% endif %}
+    <h1>Welcome to 8log!<br><i>The free online Public Blog.</i></h1><br>
+    
+    <center><form><input class="form-control" id="to" type="text"/><input id="btn" class="btn btn-primary btn-block" type="button" onclick="search1();" value="Search"/></center>
+{% endblock %}

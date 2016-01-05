@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+    <h2>This is <a href="/page/{{ user }}">{{ user }}'s</a> blog.</h2>
+    <div style="background-color:white;" id="content">
+    {% autoescape false %}
+    <p>{{ s }}</p>
+    </div> 
+    <form action="/comment/{{ user }}" method="post">
+    <input class="form-control" name="1" Placeholder="Name..." type="text"/>
+    <textarea class="form-control" name="2" Placeholder="Comment..."></textarea>
+    <input class="btn btn-info" style="right:0px;" type="submit" value="Post Comment"/>
+    </form>
+    <p>{{ c }}</p>
+    {% endautoescape %}
+   
+{% endblock %}

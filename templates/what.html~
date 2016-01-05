@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+{% autoescape false %}
+ {% if c %}
+ <br>
+ <br>
+ <br>
+ <br>
+      <p>{{ c }}</p>
+{% endif %}   
+{% endautoescape %}
+    
+{% endblock %}

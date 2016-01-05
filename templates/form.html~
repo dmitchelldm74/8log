@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+    
+    {% for post in info %}
+        <input style="color:transparent;background-color:transparent; border:none;" type="text" id='c' value="{{ post }}"/>
+    <h2>Edit Blog:</h2>
+    <form id="f1" action="" method="post">
+        <textarea id='b' style="margin: 0px; height: 411px; width: 530px;" type="text" name="content" value=""></textarea>
+        <input onclick="alert('Blog Successfully updated!')" type="submit" value="Save"><br/>
+    </form>
+    {% endfor %}
+<script>
+var w = window.location.href;
+document.getElementById('f1').action = w;  
+document.getElementById('b').value = document.getElementById('c').value;   
+</script>
+{% endblock %}
