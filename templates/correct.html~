@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block body %}
+<script>
+function sign(){
+    var a = document.getElementById("pass").value;
+    var b = document.getElementById("pass2").value;
+    if (a == b){
+        var a = document.getElementById("user").value;
+        window.location.href = '/page/' + a + '/' + b;
+}
+    else{
+        var inh = document.getElementById("er").innerHTML;
+        inh = '<font color="red">Wrong Password!</font>'
+    }
+}
+</script>
+{% if c %}
+<input style="color:transparent;background-color:transparent;border:none;" id="pass" type="password" value="{{ c }}" visible="false"/><br>
+<input class="form-control" id="user" type="text" value="{{ user }}" visible="false"/>
+<input class="form-control" id="pass2" type="password"/>
+<button class="btn btn-info" onclick="sign();">Sign In</button>
+<p id="er"></p>
+{% endif %}
+{% endblock %}
