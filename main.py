@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+import os.path
 
 app = Flask(__name__)
 
@@ -10,16 +11,47 @@ def hello_world():
     name = name if name else 'Stranger'
     return render_template('hello.html', name=name)
 
+@app.route('/page/<user12>/<password12>')
+def page2(user12, password12):
+    f = open(user12, "r")
+    f2 = f.read()
+    f.close()
+    f = open(user12 + '.password', "r")
+    f4 = f.read()
+    f.close()
+    f5 = f4.split("<!>")
+    if f5[2] == password12:
+        ok = "false"
+    else:
+        ok = "true"   
+    f = open(user12 + '.comments', "r")
+    f3 = f.read()
+    f.close()
+    if ok == "true":
+        return render_template('correct.html', user=user, c=f5[2])
+    else:    
+        return render_template('bye.html', s=f2, user=user12, c=f3)
 
 @app.route('/page/<user>')
 def goodbye(user):
     f = open(user, "r")
     f2 = f.read()
     f.close()
+    f = open(user + '.password', "r")
+    f4 = f.read()
+    f.close()
+    f5 = f4.split("<!>")
+    if len(f5) == 4:
+        ok = "true"
+    else:
+        ok = "false"   
     f = open(user + '.comments', "r")
     f3 = f.read()
     f.close()
-    return render_template('bye.html', s=f2, user=user, c=f3)
+    if ok == "true":
+        return render_template('correct.html', user=user, c=f5[2])
+    else:    
+        return render_template('bye.html', s=f2, user=user, c=f3)
     
 @app.route('/sign-in', methods = ['POST'])
 def signin():
@@ -42,14 +74,25 @@ def create():
     if request.method == 'POST':
         name = request.form['firstname']
         pas = request.form['lastname']
-        f = open(name, "w")
-        f.close()
-        f = open(name + '.comments', "w")
-        f.close()
-        f = open(name + '.password', "w")
-        f.write('<!>' + pas + '<!>')
-        f.close()
-        c = '<a style="font-size:100px;" href="/edit/' + name + '/' + pas + '">Edit Blog</a><br><a style="font-size:100px;" href="/page/' + name + '">View Blog</a><br><a style="font-size:100px;" href="/?name=' + name + '">Home</a>'
+        passw = request.form['password']
+        a = os.path.isfile(name)
+        if a == False:
+            f = open(name, "w")
+            f.close()
+            f = open(name + '.comments', "w")
+            f.close()
+            if passw == '': 
+                f = open(name + '.password', "w")
+                f.write('<!>' + pas + '<!>')
+                f.close()
+            else:
+                f = open(name + '.password', "w")
+                f.write('<!>' + pas + '<!>' + passw + '<!>')
+                f.close()  
+                c = '<a style="font-size:100px;" href="/edit/' + name + '/' + pas + '">Edit Blog</a><br><a style="font-size:100px;" href="/page/' + name + '">View Blog</a><br><a style="font-size:100px;" href="/?name=' + name + '">Home</a>'
+        else:
+            c = '<font color="red">User Already Exists!</font>'      
+       
         return render_template('what.html', c=c)
         
 @app.route('/edit/<user1>/<password1>', methods = ['GET', 'POST'])
@@ -101,3 +144,4 @@ def comment(user2):
         
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True, port=3000)
+

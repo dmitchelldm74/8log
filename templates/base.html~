@@ -13,7 +13,7 @@
 <body>
     <div id="taskbar"><a href="/"><img src="{{ url_for('static', filename='8log1.png') }}"></a></div><button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Sign-In</button>&nbsp;<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo2">Create Account</button><div class="container">
   
-  <div id="demo" style="background-color:purple;" class="collapse">
+  <div id="demo" class="collapse">
     <form action="/sign-in" method="post">
         <input class="form-control" type="text" name="firstname" Placeholder="Name..."/>
         <input class="form-control" type="password" name="lastname" Placeholder="Password..."/>
@@ -24,6 +24,7 @@
     <form action="/create" method="post">
         <input class="form-control" type="text" name="firstname" Placeholder="Name..."/>
         <input class="form-control" type="password" name="lastname" Placeholder="Password..."/>
+        <label>Private?<input class="form-control" id="passrd" style="width:500px;" name="password" type="password" placeholder="(only people with this password can see the blog, leave blank for public)"/></label><br>
         <input class="btn btn-info" type="submit" value="Create"><br/>
     </form>
   </div>
